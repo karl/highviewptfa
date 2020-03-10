@@ -12,12 +12,14 @@ export const Footer = () => {
         </div>
       </div>
       <div className="section">
-        <a className="item" href="http://mail.highviewptfa.org.uk">
-          Committe member email
-        </a>
-        <a className="item" href="http://drive.highviewptfa.org.uk">
-          Committe member drive
-        </a>
+        <div className="item">
+          <img className="logo" src="/static/gmail-logo.png" alt="" />{" "}
+          <a href="http://mail.highviewptfa.org.uk">Committee member email</a>
+        </div>
+        <div className="item">
+          <img className="logo" src="/static/google-drive-logo.png" alt="" />{" "}
+          <a href="http://drive.highviewptfa.org.uk">Committee member drive</a>
+        </div>
       </div>
       <style jsx>{`
         footer {
@@ -40,6 +42,10 @@ export const Footer = () => {
         .item {
           display: block;
           margin: 1rem 0;
+        }
+
+        .logo {
+          height: 14px;
         }
       `}</style>
     </footer>

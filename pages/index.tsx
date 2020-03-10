@@ -10,7 +10,7 @@ const Home = () => (
       </Head>
 
       <main>
-        <img className="logo" src="/logo.png" alt="" />
+        <img className="logo" src="/static/logo.png" alt="" />
 
         <h1 className="title">High View Primary PTFA</h1>
 
