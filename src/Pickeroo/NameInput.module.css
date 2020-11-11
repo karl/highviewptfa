@@ -1,0 +1,12 @@
+.NameInput {
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 2rem;
+  line-height: 1.4;
+  width: 100%;
+  min-height: 20rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #888;
+  border-radius: 3px;
+}
