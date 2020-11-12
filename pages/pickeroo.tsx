@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { useState } from "react";
-import Pickeroo from '../src/Pickeroo/Pickeroo';
+import Pickeroo from "../src/Pickeroo/Pickeroo";
 
 const PickerooPage = () => {
-  const [title, setTitle] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
 
   return (
     <>
@@ -11,6 +11,7 @@ const PickerooPage = () => {
         <Head>
           <title>Pickeroo - High View Primary PTFA</title>
           <link rel="icon" href="/favicon.ico" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
 
         <Pickeroo />

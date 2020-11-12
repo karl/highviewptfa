@@ -2,18 +2,37 @@
 }
 
 .Picker {
-  padding: 2rem;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 2rem;
+}
+
+.Logo {
+  padding-top: 2rem;
+  max-width: 30%;
 }
 
 .Title {
+  padding: 2rem;
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
   color: #005826;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .Title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .Title {
+    font-size: 2rem;
+  }
 }
 
 .Names {
@@ -23,6 +42,8 @@
   align-items: center;
   font-size: 2.5rem;
   text-align: center;
+  width: 100%;
+  overflow: hidden;
 }
 
 .Name {
@@ -57,11 +78,26 @@
   font-size: 5rem;
   border: none;
   background-color: #005826;
-  border: 1px solid #005826;
-  min-width: 30%;
-  padding: 0.1rem;
+  width: 30%;
+  min-width: 200px;
+  line-height: 1;
+  padding: 0.3rem 0.1rem 0.9rem 0.1rem;
   margin-top: 2rem;
   color: #fff;
+  border-radius: 3px;
+}
+
+
+@media (max-width: 1024px) {
+  .Shuffle {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .Shuffle {
+    font-size: 3rem;
+  }
 }
 
 .Shuffle:disabled {
