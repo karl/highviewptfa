@@ -7,6 +7,7 @@ const Home = () => (
       <Head>
         <title>High View Primary PTFA</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <main>
