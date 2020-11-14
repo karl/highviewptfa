@@ -1,0 +1,25 @@
+.footer {
+  background: #dfe4e0;
+  color: #888888;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer a {
+  color: #628cbf;
+}
+
+.section {
+  padding: 2rem;
+  flex: 1 1 500px;
+  text-align: center;
+}
+
+.item {
+  display: block;
+  margin: 1rem 0;
+}
+
+.logo {
+  height: 14px;
+}
