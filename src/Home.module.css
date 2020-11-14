@@ -50,8 +50,16 @@
 }
 
 .section {
+  padding: 2rem 0;
+  max-width: 80ch;
+}
+
+.section h2 {
   text-align: center;
-  padding: 2rem;
+}
+
+.centered {
+  text-align: center;
 }
 
 .poster {
