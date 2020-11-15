@@ -29,6 +29,19 @@ export const Home = () => {
             />
           </div>
 
+
+          <div className={styles.section}>
+            <h2>Why we fundraise?</h2>
+
+            <Image
+              width={424}
+              height={600}
+              layout={"intrinsic"}
+              src="/static/why-we-fundraise.jpg"
+              alt="An image of some of the ways your PTFA donations have helped High View Primary School."
+            />
+          </div>
+
           <div className={styles.section}>
             <h2>What is the PTFA?</h2>
 
