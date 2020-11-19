@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import md5 from "md5";
 import NameInput from "./NameInput";
 import Carousel from "./Carousel";
-
+import Snowflakes from 'magic-snowflakes';
 import styles from "./Pickeroo.module.css";
 
 const TitleInput = ({ value, onChange }) => {
@@ -71,6 +71,15 @@ type AppProps = {
 const App = ({ title, names, theme, onChange }: AppProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [revolutions, setRevolutions] = useState(0);
+
+  useEffect(() => {
+    if (theme === Theme.Christmas) {
+      const snowflakes = Snowflakes();
+      return () => {
+        snowflakes.destroy();
+      };
+    }
+  }, [theme]);
 
   return (
     <div className={styles.App}>
