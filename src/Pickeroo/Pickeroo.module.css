@@ -1,6 +1,10 @@
 .App {
 }
 
+.theme-christmas {
+  background: rgb(247,248,243);
+}
+
 .Picker {
   height: 100vh;
   display: flex;
@@ -11,6 +15,7 @@
 
 .Logo {
   padding-top: 2rem;
+  width: 150px;
   max-width: 30%;
 }
 
@@ -21,6 +26,11 @@
   font-size: 4rem;
   color: #005826;
   text-align: center;
+}
+
+.theme-christmas .Title {
+  color: #cc1d00;
+  font-family: 'Mountains of Christmas', cursive;
 }
 
 @media (max-width: 1024px) {
@@ -85,6 +95,11 @@
   margin-top: 2rem;
   color: #fff;
   border-radius: 3px;
+}
+
+.theme-christmas .Shuffle {
+  background: #cc1d00;
+  color: rgb(236, 236, 226);
 }
 
 

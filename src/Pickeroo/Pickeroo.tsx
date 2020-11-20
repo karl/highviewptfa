@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import md5 from "md5";
 import NameInput from "./NameInput";
 import Carousel from "./Carousel";
-
+import Snowflakes from 'magic-snowflakes';
 import styles from "./Pickeroo.module.css";
+import { LightRope } from "./LightRope";
+import classnames from 'classnames';
 
 const TitleInput = ({ value, onChange }) => {
   return (
@@ -16,28 +18,74 @@ const TitleInput = ({ value, onChange }) => {
   );
 };
 
-const Name = ({ name }) => {
-  const hash = md5(name);
+const NUMBER_OF_CHRISTMAS_IMAGES = 22;
+
+const hashStr = (str:string) => {
+  var hash = 0;
+  for (var i = 0; i < str.length; i++) {
+      var charCode = str.charCodeAt(i);
+      hash += charCode;
+  }
+  return hash;
+}
+
+const getCharacterImage = (theme: Theme, name: string) => {
+  if (theme === Theme.Robots) {
+    return `https://robohash.org/${md5(name)}.png?set=set1`;
+  }
+
+  if (theme === Theme.Christmas) {
+    return `/static/christmas/characters/${hashStr(md5(name)) % NUMBER_OF_CHRISTMAS_IMAGES}.png`;
+  }
+
+  return "";
+};
+
+const Name = ({ name, theme }: { name: string; theme: Theme }) => {
   return (
     <div className={styles.Name}>
-      <img src={`https://robohash.org/${hash}.png?set=set1`} alt="" />
+      <img src={getCharacterImage(theme, name)} alt="" />
       <div className={styles.NameText}>{name}</div>
     </div>
   );
 };
 
+export enum Theme {
+  Robots = "robots",
+  Christmas = "christmas",
+}
+
 type AppProps = {
   title: string;
   names: string[];
-  onChange: ({ title, names }: { title: string; names: string[] }) => void;
+  theme: Theme;
+  onChange: ({
+    title,
+    names,
+    theme,
+  }: {
+    title: string;
+    names: string[];
+    theme: Theme;
+  }) => void;
 };
 
-const App = ({ title, names, onChange }: AppProps) => {
+const App = ({ title, names, theme, onChange }: AppProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [revolutions, setRevolutions] = useState(0);
 
+  useEffect(() => {
+    if (theme === Theme.Christmas) {
+      const snowflakes = Snowflakes();
+      return () => {
+        snowflakes.destroy();
+      };
+    }
+  }, [theme]);
+
   return (
-    <div className={styles.App}>
+    <div className={classnames(styles.App, styles[`theme-${theme}`])}>
+      {theme === Theme.Christmas && <LightRope />}
       <div className={styles.Picker}>
         <img className={styles.Logo} src="/static/logo.png" alt="" />
         <div className={styles.Title}>{title}</div>
@@ -52,7 +100,7 @@ const App = ({ title, names, onChange }: AppProps) => {
           <div style={{ opacity: selectedIndex === null ? 0.1 : 1 }}>
             <Carousel selectedIndex={selectedIndex} revolutions={revolutions}>
               {names.map((name, i) => (
-                <Name key={i} name={name} />
+                <Name key={i} name={name} theme={theme} />
               ))}
             </Carousel>
           </div>
@@ -73,16 +121,25 @@ const App = ({ title, names, onChange }: AppProps) => {
         <TitleInput
           value={title}
           onChange={(newTitle) => {
-            onChange({ title: newTitle, names: names });
+            onChange({ title: newTitle, names: names, theme });
           }}
         />
         <NameInput
           value={names}
           onChange={(newNames) => {
-            onChange({ title, names: newNames });
+            onChange({ title, names: newNames, theme });
             setSelectedIndex(null);
           }}
         />
+        <select
+          value={theme}
+          onChange={(event) => {
+            onChange({ title, names, theme: event.target.value as Theme });
+          }}
+        >
+          <option value={Theme.Robots}>Robot theme</option>
+          <option value={Theme.Christmas}>Christmas theme</option>
+        </select>
         <div className={styles.Hint}>{names.length} names.</div>
         <div className={styles.Hint}>
           After entering your names, save this page to your browser bookmarks
