@@ -17,6 +17,11 @@ const PickerooPage = ({ defaultTitle, defaultNames, defaultTheme }) => {
       <SharedHead />
       <Head>
         <title>Pickeroo - High View Primary PTFA</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <Pickeroo
         title={data.title}

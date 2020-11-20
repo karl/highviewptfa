@@ -1,10 +1,13 @@
 .Carousel {
   position: relative;
   width: 240px;
-  height: 300px;
+  min-height: 300px;
   margin: 0px auto;
   background: #ffffff88;
+  /* background: #ec6a4ada; */
   padding-top: 1rem;
+  /* border: 3px solid red;
+  border-radius: 3px; */
 }
 
 .CarouselInner {
