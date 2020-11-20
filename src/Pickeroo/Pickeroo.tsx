@@ -4,6 +4,7 @@ import NameInput from "./NameInput";
 import Carousel from "./Carousel";
 import Snowflakes from 'magic-snowflakes';
 import styles from "./Pickeroo.module.css";
+import { LightRope } from "./LightRope";
 
 const TitleInput = ({ value, onChange }) => {
   return (
@@ -16,7 +17,7 @@ const TitleInput = ({ value, onChange }) => {
   );
 };
 
-const NUMBER_OF_CHRISTMAS_IMAGES = 8;
+const NUMBER_OF_CHRISTMAS_IMAGES = 22;
 
 const hashStr = (str:string) => {
   var hash = 0;
@@ -83,6 +84,7 @@ const App = ({ title, names, theme, onChange }: AppProps) => {
 
   return (
     <div className={styles.App}>
+      {theme === Theme.Christmas && <LightRope />}
       <div className={styles.Picker}>
         <img className={styles.Logo} src="/static/logo.png" alt="" />
         <div className={styles.Title}>{title}</div>
