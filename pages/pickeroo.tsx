@@ -1,15 +1,16 @@
 import Head from "next/head";
-import Pickeroo, { Theme } from "../src/Pickeroo/Pickeroo";
+import Pickeroo, { Theme, Mode } from "../src/Pickeroo/Pickeroo";
 import { SharedHead } from "../src/SharedHead";
 import { useState } from "react";
 
 const divider = "•";
 
-const PickerooPage = ({ defaultTitle, defaultNames, defaultTheme }) => {
+const PickerooPage = ({ defaultTitle, defaultNames, defaultTheme, defaultMode }) => {
   const [data, setData] = useState({
     title: defaultTitle,
     names: defaultNames,
     theme: defaultTheme,
+    mode: defaultMode,
   });
 
   return (
@@ -27,13 +28,16 @@ const PickerooPage = ({ defaultTitle, defaultNames, defaultTheme }) => {
         title={data.title}
         names={data.names}
         theme={data.theme}
-        onChange={({ title, names, theme }) => {
-          setData({ title, names, theme });
+        mode={data.mode}
+        onChange={(update) => {
+          const newData = { ...data, ...update };
+          setData(newData);
 
           var query = new URLSearchParams(window.location.search);
-          query.set("title", title);
-          query.set("names", names.join(divider));
-          query.set("theme", theme);
+          query.set("title", newData.title);
+          query.set("names", newData.names.join(divider));
+          query.set("theme", newData.theme);
+          query.set("mode", newData.mode);
           history.replaceState(
             null,
             "",
@@ -50,12 +54,14 @@ export const getServerSideProps = async (context) => {
   const defaultTitle = query.title ?? "";
   const defaultNames = query.names?.split(divider) ?? [];
   const defaultTheme = query.theme ?? Theme.Robots;
+  const defaultMode = query.mode ?? Mode.Classroom;
 
   return {
     props: {
       defaultTitle,
       defaultNames,
       defaultTheme,
+      defaultMode,
     },
   };
 };
