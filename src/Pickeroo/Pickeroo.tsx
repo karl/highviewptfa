@@ -80,9 +80,16 @@ const App = ({ title, names, theme, mode, onChange }: AppProps) => {
   const [revolutions, setRevolutions] = useState(0);
 
   const [remainingNames, setRemainingNames] = useState(names);
+  const [displayNames, setDisplayNames] = useState(names.slice(0, 50));
+  const [previousPicks, setPreviousPicks] = useState<string[]>([]);
+
   useEffect(() => {
+    setSelectedIndex(null);
     setRemainingNames(names);
+    setDisplayNames(names.slice(0, 50));
+    setPreviousPicks([]);
   }, [names]);
+
 
   useEffect(() => {
     if (theme === Theme.Christmas) {
@@ -115,8 +122,8 @@ const App = ({ title, names, theme, mode, onChange }: AppProps) => {
           )}
           {names.length > 0 && remainingNames.length > 0 && (
             <div style={{ opacity: selectedIndex === null ? 0.1 : 1 }}>
-              <Carousel selectedIndex={selectedIndex} revolutions={revolutions}>
-                {remainingNames.map((name, i) => (
+              <Carousel selectedIndex={Math.min(24, selectedIndex)} revolutions={revolutions}>
+                {displayNames.map((name, i) => (
                   <Name key={i} name={name} theme={theme} />
                 ))}
               </Carousel>
@@ -127,6 +134,11 @@ const App = ({ title, names, theme, mode, onChange }: AppProps) => {
           className={styles.Shuffle}
           disabled={remainingNames.length === 0}
           onClick={() => {
+            if (selectedIndex !== null) {
+              const name = remainingNames[selectedIndex];
+              setPreviousPicks([name, ...previousPicks]);
+            }
+
             const newRemainingNames = [...remainingNames];
             if (mode === Mode.Raffle && selectedIndex !== null) {
               newRemainingNames.splice(selectedIndex, 1)
@@ -136,11 +148,25 @@ const App = ({ title, names, theme, mode, onChange }: AppProps) => {
             const index = Math.floor(Math.random() * newRemainingNames.length);
             setSelectedIndex(index);
             setRevolutions(revolutions + 1);
+
+            const start = Math.max(0, index - 24);
+            const end = start + 50;
+            setDisplayNames(newRemainingNames.slice(start, end));
           }}
         >
           ↺
         </button>
       </div>
+      {previousPicks.length > 0 && (
+      <div className={styles.PreviousPicks}>
+        <h2>Previous picks</h2>
+        <ul>
+          {previousPicks.map((name, index) => (
+            <li key={previousPicks.length - index}>{name}</li>
+          ))}
+        </ul>
+      </div>
+      )}
       <div className={styles.Editor}>
         <TitleInput
           value={title}
