@@ -44,10 +44,12 @@ const getCharacterImage = (theme: Theme, name: string) => {
 };
 
 const Name = ({ name, theme }: { name: string; theme: Theme }) => {
+  const [main, detail] = name.split(' - ');
   return (
     <div className={styles.Name}>
       <img src={getCharacterImage(theme, name)} alt="" />
-      <div className={styles.NameText}>{name}</div>
+      <div className={styles.NameText}>{main}</div>
+      <div className={styles.NameDetail}>{detail}</div>
     </div>
   );
 };
@@ -67,6 +69,7 @@ type AppProps = {
   names: string[];
   theme: Theme;
   mode: Mode;
+  hideInputs: boolean;
   onChange: (update: {
     title?: string;
     names?: string[];
@@ -75,7 +78,7 @@ type AppProps = {
   }) => void;
 };
 
-const App = ({ title, names, theme, mode, onChange }: AppProps) => {
+const App = ({ title, names, theme, mode, hideInputs, onChange }: AppProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [revolutions, setRevolutions] = useState(0);
 
@@ -167,7 +170,8 @@ const App = ({ title, names, theme, mode, onChange }: AppProps) => {
         </ul>
       </div>
       )}
-      <div className={styles.Editor}>
+      {!hideInputs &&
+      (<div className={styles.Editor}>
         <TitleInput
           value={title}
           onChange={(newTitle) => {
@@ -212,7 +216,7 @@ const App = ({ title, names, theme, mode, onChange }: AppProps) => {
             all names back)
           </option>
         </select>
-      </div>
+      </div>)}
     </div>
   );
 };

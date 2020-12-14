@@ -1,7 +1,7 @@
 .Carousel {
   position: relative;
   width: 240px;
-  min-height: 300px;
+  min-height: 320px;
   margin: 0px auto;
   background: #ffffff88;
   /* background: #ec6a4ada; */
@@ -28,6 +28,6 @@
 .CarouselItem {
   position: absolute;
   width: 240px;
-  height: 300px;
+  height: 320px;
   backface-visibility: hidden;
 }
