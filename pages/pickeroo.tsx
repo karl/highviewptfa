@@ -2,10 +2,19 @@ import Head from "next/head";
 import Pickeroo, { Theme, Mode } from "../src/Pickeroo/Pickeroo";
 import { SharedHead } from "../src/SharedHead";
 import { useState } from "react";
+import { google } from 'googleapis';
+import shuffle from 'knuth-shuffle-seeded';
+import { truncateSync } from "fs";
 
 const divider = "•";
 
-const PickerooPage = ({ defaultTitle, defaultNames, defaultTheme, defaultMode }) => {
+const PickerooPage = ({
+  defaultTitle,
+  defaultNames,
+  defaultTheme,
+  defaultMode,
+  isFromSheet = false,
+}) => {
   const [data, setData] = useState({
     title: defaultTitle,
     names: defaultNames,
@@ -29,6 +38,7 @@ const PickerooPage = ({ defaultTitle, defaultNames, defaultTheme, defaultMode })
         names={data.names}
         theme={data.theme}
         mode={data.mode}
+        hideInputs={isFromSheet}
         onChange={(update) => {
           const newData = { ...data, ...update };
           setData(newData);
@@ -51,6 +61,12 @@ const PickerooPage = ({ defaultTitle, defaultNames, defaultTheme, defaultMode })
 
 export const getServerSideProps = async (context) => {
   const { query } = context;
+
+  const sheetId = query.sheetId ?? null;
+  if (sheetId) {
+    return await getFromSheet(sheetId);
+  }
+
   const defaultTitle = query.title ?? "";
   const defaultNames = query.names?.split(divider) ?? [];
   const defaultTheme = query.theme ?? Theme.Robots;
@@ -67,3 +83,26 @@ export const getServerSideProps = async (context) => {
 };
 
 export default PickerooPage;
+
+const getFromSheet = async (spreadsheetId: string) => {
+  const sheets = google.sheets({ version: 'v4', auth: process.env.GOOGLE_SHEETS_API_KEY });
+
+  const nameDetails = await sheets.spreadsheets.values.get({ spreadsheetId, range: 'Pickeroo!A2:C' });
+  const names = nameDetails.data.values.reduce((names, [name, yearAndClass, quantity]) => {
+    return [...names, ...Array(parseInt(quantity)).fill(`${name} - ${yearAndClass}`)];
+  });
+  const shuffledNames = shuffle(names, 0);
+
+  const pickerDetails = await sheets.spreadsheets.values.get({ spreadsheetId, range: 'Pickeroo!E2:G2' });
+  const [defaultTitle, defaultTheme, defaultMode] = pickerDetails.data.values[0];
+
+  return {
+    props: {
+      defaultTitle,
+      defaultNames: shuffledNames,
+      defaultTheme,
+      defaultMode,
+      isFromSheet: true,
+    },
+  };
+}

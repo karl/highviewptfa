@@ -68,6 +68,14 @@
   text-overflow: ellipsis;
 }
 
+.NameDetail {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 2rem;
+  color: #666666;
+}
+
 .Name img {
   width: 200px;
   height: 200px;

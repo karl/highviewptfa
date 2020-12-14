@@ -1,5 +1,3 @@
 # To Do
 
-- Christmas characters.
-- Christmas theme (snowflakes, lights, etc).
-- Take name out of rotation once it has come up (and reset button).
+- Give each entry a ticket number (makes it clearer if same name is picked twice).
