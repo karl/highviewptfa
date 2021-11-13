@@ -90,7 +90,7 @@ const getFromSheet = async (spreadsheetId: string) => {
   const nameDetails = await sheets.spreadsheets.values.get({ spreadsheetId, range: 'Pickeroo!A2:C' });
   const names = nameDetails.data.values.reduce((names, [name, yearAndClass, quantity]) => {
     return [...names, ...Array(parseInt(quantity)).fill(`${name} - ${yearAndClass}`)];
-  });
+  }, []);
   const shuffledNames = shuffle(names, 0);
 
   const pickerDetails = await sheets.spreadsheets.values.get({ spreadsheetId, range: 'Pickeroo!E2:G2' });
