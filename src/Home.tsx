@@ -1,7 +1,7 @@
 import React from "react";
 import { Footer } from "./Footer";
 import styles from "./Home.module.css";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 export const Home = () => {
   return (
