@@ -14,6 +14,11 @@ export const Home = () => {
             alt=""
             width={100}
             height={78.5}
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+            }}
+            priority
           />
 
           <h1 className={styles.title}>High View Primary PTFA</h1>
@@ -24,9 +29,13 @@ export const Home = () => {
             <Image
               width={424}
               height={600}
-              layout={"intrinsic"}
               src="/static/why-we-fundraise.jpg"
               alt="An image of some of the ways your PTFA donations have helped High View Primary School."
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+              }}
+              priority
             />
           </div>
 

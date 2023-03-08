@@ -2,11 +2,17 @@ import React from "react";
 
 import styles from "./NameInput.module.css";
 
-class NameInput extends React.Component<
-  { value: string[]; onChange: (names: string[]) => void },
-  { text: string }
-> {
-  constructor(props) {
+type NameInputProps = {
+  value: string[];
+  onChange: (names: string[]) => void;
+};
+
+type NameInputState = {
+  text: string;
+};
+
+class NameInput extends React.Component<NameInputProps, NameInputState> {
+  constructor(props: NameInputProps) {
     super(props);
     const { value } = this.props;
 
@@ -15,7 +21,7 @@ class NameInput extends React.Component<
     };
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: NameInputProps) {
     const { value } = this.props;
     const { text } = this.state;
 
@@ -26,8 +32,8 @@ class NameInput extends React.Component<
     }
   }
 
-  parseText(text) {
-    let names = [];
+  parseText(text: string) {
+    let names: string[] = [];
     text.split("\n").forEach((name) => {
       const trimmed = name.trim();
       if (trimmed === "") {
