@@ -2,7 +2,13 @@ import React from "react";
 
 import styles from "./Carousel.module.css";
 
-const Carousel = ({ selectedIndex, revolutions, children }) => {
+type CarouselProps = {
+  selectedIndex: number;
+  revolutions: number;
+  children: React.ReactNode;
+};
+
+const Carousel = ({ selectedIndex, revolutions, children }: CarouselProps) => {
   const total = React.Children.count(children);
   const deg = 720 * revolutions + (360 / total) * selectedIndex;
   const tz =
@@ -29,7 +35,13 @@ const Carousel = ({ selectedIndex, revolutions, children }) => {
   );
 };
 
-const CarouselItem = ({ index, total, children }) => {
+type CarouselItemProps = {
+  index: number;
+  total: number;
+  children: React.ReactNode;
+};
+
+const CarouselItem = ({ index, total, children }: CarouselItemProps) => {
   const deg = (360 / total) * index;
   const tz =
     total === 1 ? 0 : Math.round((240 + 10) / 2 / Math.tan(Math.PI / total));

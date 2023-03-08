@@ -18,6 +18,7 @@ export const Home = () => {
               maxWidth: "100%",
               height: "auto",
             }}
+            priority
           />
 
           <h1 className={styles.title}>High View Primary PTFA</h1>
@@ -34,6 +35,7 @@ export const Home = () => {
                 maxWidth: "100%",
                 height: "auto",
               }}
+              priority
             />
           </div>
 

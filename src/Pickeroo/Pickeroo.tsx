@@ -7,7 +7,12 @@ import styles from "./Pickeroo.module.css";
 import { LightRope } from "./LightRope";
 import classnames from "classnames";
 
-const TitleInput = ({ value, onChange }) => {
+type TitleInputProps = {
+  value: string;
+  onChange: (value: string) => void;
+};
+
+const TitleInput = ({ value, onChange }: TitleInputProps) => {
   return (
     <input
       className={styles.TitleInput}
@@ -44,7 +49,7 @@ const getCharacterImage = (theme: Theme, name: string) => {
 };
 
 const Name = ({ name, theme }: { name: string; theme: Theme }) => {
-  const [main, detail] = name.split(' - ');
+  const [main, detail] = name.split(" - ");
   return (
     <div className={styles.Name}>
       <img src={getCharacterImage(theme, name)} alt="" />
@@ -93,7 +98,6 @@ const App = ({ title, names, theme, mode, hideInputs, onChange }: AppProps) => {
     setPreviousPicks([]);
   }, [names]);
 
-
   useEffect(() => {
     if (theme === Theme.Christmas) {
       const snowflakes = Snowflakes();
@@ -120,12 +124,17 @@ const App = ({ title, names, theme, mode, hideInputs, onChange }: AppProps) => {
             <div className={styles.NoNames}>
               No names
               <div className={styles.Hint}>Everyone has been picked!</div>
-              <div className={styles.Hint}>Refresh the page to add all the names back.</div>
+              <div className={styles.Hint}>
+                Refresh the page to add all the names back.
+              </div>
             </div>
           )}
           {names.length > 0 && remainingNames.length > 0 && (
             <div style={{ opacity: selectedIndex === null ? 0.1 : 1 }}>
-              <Carousel selectedIndex={Math.min(24, selectedIndex)} revolutions={revolutions}>
+              <Carousel
+                selectedIndex={Math.min(24, selectedIndex ?? 0)}
+                revolutions={revolutions}
+              >
                 {displayNames.map((name, i) => (
                   <Name key={i} name={name} theme={theme} />
                 ))}
@@ -144,7 +153,7 @@ const App = ({ title, names, theme, mode, hideInputs, onChange }: AppProps) => {
 
             const newRemainingNames = [...remainingNames];
             if (mode === Mode.Raffle && selectedIndex !== null) {
-              newRemainingNames.splice(selectedIndex, 1)
+              newRemainingNames.splice(selectedIndex, 1);
               setRemainingNames(newRemainingNames);
             }
 
@@ -161,62 +170,63 @@ const App = ({ title, names, theme, mode, hideInputs, onChange }: AppProps) => {
         </button>
       </div>
       {previousPicks.length > 0 && (
-      <div className={styles.PreviousPicks}>
-        <h2>Previous picks</h2>
-        <ul>
-          {previousPicks.map((name, index) => (
-            <li key={previousPicks.length - index}>{name}</li>
-          ))}
-        </ul>
-      </div>
-      )}
-      {!hideInputs &&
-      (<div className={styles.Editor}>
-        <TitleInput
-          value={title}
-          onChange={(newTitle) => {
-            onChange({ title: newTitle });
-          }}
-        />
-        <NameInput
-          value={names}
-          onChange={(newNames) => {
-            onChange({ names: newNames });
-            setSelectedIndex(null);
-          }}
-        />
-        <div className={styles.Hint}>{names.length} names.</div>
-        <div className={styles.Hint}>
-          After entering your names, save this page to your browser bookmarks
-          for quick access to this list.
+        <div className={styles.PreviousPicks}>
+          <h2>Previous picks</h2>
+          <ul>
+            {previousPicks.map((name, index) => (
+              <li key={previousPicks.length - index}>{name}</li>
+            ))}
+          </ul>
         </div>
-        <hr />
-        <select
-          className={styles.Setting}
-          value={theme}
-          onChange={(event) => {
-            onChange({ theme: event.target.value as Theme });
-          }}
-        >
-          <option value={Theme.Robots}>Robot theme</option>
-          <option value={Theme.Christmas}>Christmas theme</option>
-        </select>
-        <select
-          className={styles.Setting}
-          value={mode}
-          onChange={(event) => {
-            onChange({ mode: event.target.value as Mode });
-          }}
-        >
-          <option value={Mode.Classroom}>
-            Classroom mode (names are returned after each pick)
-          </option>
-          <option value={Mode.Raffle}>
-            Raffle mode (names are removed when picked. Refresh the page to add
-            all names back)
-          </option>
-        </select>
-      </div>)}
+      )}
+      {!hideInputs && (
+        <div className={styles.Editor}>
+          <TitleInput
+            value={title}
+            onChange={(newTitle) => {
+              onChange({ title: newTitle });
+            }}
+          />
+          <NameInput
+            value={names}
+            onChange={(newNames) => {
+              onChange({ names: newNames });
+              setSelectedIndex(null);
+            }}
+          />
+          <div className={styles.Hint}>{names.length} names.</div>
+          <div className={styles.Hint}>
+            After entering your names, save this page to your browser bookmarks
+            for quick access to this list.
+          </div>
+          <hr />
+          <select
+            className={styles.Setting}
+            value={theme}
+            onChange={(event) => {
+              onChange({ theme: event.target.value as Theme });
+            }}
+          >
+            <option value={Theme.Robots}>Robot theme</option>
+            <option value={Theme.Christmas}>Christmas theme</option>
+          </select>
+          <select
+            className={styles.Setting}
+            value={mode}
+            onChange={(event) => {
+              onChange({ mode: event.target.value as Mode });
+            }}
+          >
+            <option value={Mode.Classroom}>
+              Classroom mode (names are returned after each pick)
+            </option>
+            <option value={Mode.Raffle}>
+              Raffle mode (names are removed when picked. Refresh the page to
+              add all names back)
+            </option>
+          </select>
+        </div>
+      )}
     </div>
   );
 };
