@@ -24,6 +24,7 @@ const TitleInput = ({ value, onChange }: TitleInputProps) => {
 };
 
 const NUMBER_OF_CHRISTMAS_IMAGES = 22;
+const NUMBER_OF_EASTER_IMAGES = 20;
 
 const hashStr = (str: string) => {
   var hash = 0;
@@ -45,6 +46,12 @@ const getCharacterImage = (theme: Theme, name: string) => {
     }.png`;
   }
 
+  if (theme === Theme.Easter) {
+    return `/static/easter/characters/${
+      hashStr(md5(name)) % NUMBER_OF_EASTER_IMAGES
+    }.png`;
+  }
+
   return "";
 };
 
@@ -62,6 +69,7 @@ const Name = ({ name, theme }: { name: string; theme: Theme }) => {
 export enum Theme {
   Robots = "robots",
   Christmas = "christmas",
+  Easter = "easter"
 }
 
 export enum Mode {
@@ -134,6 +142,7 @@ const App = ({ title, names, theme, mode, hideInputs, onChange }: AppProps) => {
               <Carousel
                 selectedIndex={Math.min(24, selectedIndex ?? 0)}
                 revolutions={revolutions}
+                theme={theme}
               >
                 {displayNames.map((name, i) => (
                   <Name key={i} name={name} theme={theme} />
@@ -209,6 +218,7 @@ const App = ({ title, names, theme, mode, hideInputs, onChange }: AppProps) => {
           >
             <option value={Theme.Robots}>Robot theme</option>
             <option value={Theme.Christmas}>Christmas theme</option>
+            <option value={Theme.Easter}>Easter theme</option>
           </select>
           <select
             className={styles.Setting}
