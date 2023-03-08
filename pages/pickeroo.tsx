@@ -36,8 +36,13 @@ const PickerooPage = ({
       <Head>
         <title>Pickeroo - High View Primary PTFA</title>
         <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
           rel="stylesheet"
         />
       </Head>
